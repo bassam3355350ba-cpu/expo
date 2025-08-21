@@ -20,7 +20,7 @@ export default function Layout() {
             fontSize: 16,
             fontWeight: 700,
             fontStyle: 'italic',
-            fontFamily: 'monospace',
+            // fontFamily: 'Courier New',
             color: Platform.OS === 'android' ? '#888' : undefined,
           }}
           backgroundColor={Platform.OS === 'android' ? 'black' : undefined}
@@ -30,45 +30,28 @@ export default function Layout() {
           // iOS only
           blurEffect="systemDefault"
           minimizeBehavior="onScrollDown"
+          disableTransparentOnScrollEdge
           // Android only
           labelVisibilityMode="auto"
           rippleColor="orange"
           indicatorColor="black">
-          {/* iOS only */}
-          <NativeTabs.ScrollEdgeAppearance
-            ios26LabelStyle={{
-              fontSize: 8,
-              fontWeight: 100,
-              fontStyle: 'italic',
-              fontFamily: 'Courier New',
-              color: 'white',
-            }}
-            ios26IconColor="#f00"
-            blurEffect="none"
-            backgroundColor={null}
-            ios26BadgeBackgroundColor="#00f"
-          />
           <NativeTabs.Trigger name="index">
-            <Label>My Watch</Label>
-            <Icon
-              selectedColor={{ standard: '#f00', scrollEdge: '#0f0' }}
-              sf="applewatch.side.right"
-              drawable="ic_phone"
-            />
+            <Label selectedStyle={{ color: '#0f0' }}>My Watch</Label>
+            <Icon selectedColor="deepNavy" sf="applewatch.side.right" drawable="ic_phone" />
           </NativeTabs.Trigger>
           {activeTabs.map((tab) => (
             <NativeTabs.Trigger key={tab} name={tab}>
               <Icon sf="plus" drawable="ic_search" />
-              <Badge selectedBackgroundColor={{ scrollEdge: '#ff0', standard: '#00f' }} />
+              <Badge selectedBackgroundColor="#ff0" />
             </NativeTabs.Trigger>
           ))}
           <NativeTabs.Trigger name="faces">
-            {/* <TabBar
-              // Styles applied to the whole tab bar when this tab is selected
-              backgroundColor
-              blurEffect
-              iconColor
-            /> */}
+            <NativeTabs.Trigger.TabBar
+              backgroundColor="blue"
+              blurEffect="light"
+              iconColor="red"
+              indicatorColor="white"
+            />
             <Icon
               selectedColor="#f00"
               sf={{
@@ -78,7 +61,7 @@ export default function Layout() {
               drawable="ic_lock_open"
             />
             <Label hidden />
-            <Badge selectedBackgroundColor={{ scrollEdge: '#ff0', standard: '#00f' }}>1</Badge>
+            <Badge selectedBackgroundColor="#ff0">1</Badge>
           </NativeTabs.Trigger>
           <NativeTabs.Trigger name="explore" role="search">
             <Icon sf="magnifyingglass" drawable="ic_search" />

@@ -50,11 +50,11 @@ export interface NativeTabOptions extends DefaultRouterOptions {
    */
   badgeValue?: string;
   /**
-   * @platform ios
+   * The style of the tab label when the tab is selected.
    */
   selectedLabelStyle?: NativeTabsLabelStyle;
   /**
-   * @platform ios
+   * The style of all the tab labels, when the tab is selected
    */
   labelStyle?: NativeTabsLabelStyle;
   /**
@@ -82,21 +82,34 @@ export interface NativeTabOptions extends DefaultRouterOptions {
    */
   badgeBackgroundColor?: ColorValue;
   /**
+   * The color of the badge text.
+   *
+   * @platform android
+   * @platform web
+   */
+  badgeTextColor?: ColorValue;
+  /**
    * The color of the background when the tab is selected.
    */
-  backgroundColor?: TypeOrRecord<ColorValue, 'default' | 'scrollEdge'>;
+  backgroundColor?: ColorValue;
   /**
    * The blur effect to apply when the tab is selected.
    *
    * @platform iOS
    */
-  blurEffect?: TypeOrRecord<ColorValue, 'default' | 'scrollEdge'>;
+  blurEffect?: NativeTabsBlurEffect;
   /**
    * The color of the icon when the tab is selected.
    *
    * On iOS 26+ you can change the icon color in the scroll edge state.
    */
   iconColor?: ColorValue;
+  /**
+   * When set to `true`, the tab bar will not become transparent when scrolled to the edge.
+   *
+   * @platform iOS
+   */
+  disableTransparentOnScrollEdge?: boolean;
   /**
    * The position adjustment for the title when the tab is selected.
    *
@@ -106,6 +119,13 @@ export interface NativeTabOptions extends DefaultRouterOptions {
     horizontal?: number;
     vertical?: number;
   };
+  /**
+   * The color of the tab indicator.
+   *
+   * @platform android
+   * @platform web
+   */
+  indicatorColor?: ColorValue;
 }
 
 export type SfSymbolOrImageSource =
@@ -282,6 +302,12 @@ export interface NativeTabsProps extends PropsWithChildren {
     horizontal?: number;
     vertical?: number;
   };
+  /**
+   * When set to `true`, the tab bar will not become transparent when scrolled to the edge.
+   *
+   * @platform iOS
+   */
+  disableTransparentOnScrollEdge?: boolean;
   // #endregion iOS props
   // #region android props
   /**
@@ -314,19 +340,20 @@ export interface NativeTabsProps extends PropsWithChildren {
    * The color of the tab indicator.
    *
    * @platform android
+   * @platform web
    */
   indicatorColor?: ColorValue;
   /**
    * The color of the badge text.
    *
    * @platform android
+   * @platform web
    */
   badgeTextColor?: ColorValue;
   // #endregion android props
 }
 export interface NativeTabsViewProps extends NativeTabsProps {
   focusedIndex: number;
-  scrollEdgeAppearanceProps: NativeTabsScrollEdgeAppearanceProps | undefined;
   builder: ReturnType<
     typeof useNavigationBuilder<
       TabNavigationState<ParamListBase>,
@@ -438,44 +465,6 @@ const SUPPORTED_TAB_BAR_ITEM_ROLES = [
 
 export type NativeTabsTabBarItemRole = (typeof SUPPORTED_TAB_BAR_ITEM_ROLES)[number];
 
-export interface NativeTabsScrollEdgeAppearanceProps {
-  // This props work inconsistently before iOS 26
-  // TODO: find better prefix then ios26
-  /**
-   * The style of the tab label in the scroll edge state.
-   *
-   * @platform iOS 26+
-   */
-  ios26LabelStyle?: NativeTabsLabelStyle;
-  // disabledLabelStyle?: NativeTabsLabelStyle;
-  /**
-   * The color of the tab icon in the scroll edge state.
-   *
-   * @platform iOS 26+
-   */
-  ios26IconColor?: ColorValue;
-  /**
-   * The blur effect applied to the tab in the scroll edge state.
-   *
-   * @platform iOS 26+
-   */
-  blurEffect?: NativeTabsBlurEffect;
-  /**
-   * The background color of the tab in the scroll edge state.
-   *
-   * Use `null` to reset the background color
-   *
-   * @platform iOS
-   */
-  backgroundColor?: ColorValue | null;
-  /**
-   * The color of the badge in the scroll edge state.
-   *
-   * @platform iOS 26+
-   */
-  ios26BadgeBackgroundColor?: ColorValue;
-}
-
 export interface NativeTabsTriggerTabBarProps {
   /**
    * The background color of the tab bar, when the tab is selected
@@ -486,11 +475,33 @@ export interface NativeTabsTriggerTabBarProps {
    */
   iconColor?: ColorValue;
   /**
+   * The background color of every badge in the tab bar.
+   */
+  badgeBackgroundColor?: ColorValue;
+  /**
    * The blur effect applied to the tab bar, when the tab is selected
    *
    * @platform iOS
    */
   blurEffect?: NativeTabsBlurEffect;
-  // ScrollEdgeAppearance
-  children?: React.ReactNode;
+  /**
+   * When set to `true`, the tab bar will not become transparent when scrolled to the edge.
+   *
+   * @platform iOS
+   */
+  disableTransparentOnScrollEdge?: boolean;
+  /**
+   * The color of the badge text.
+   *
+   * @platform android
+   * @platform web
+   */
+  badgeTextColor?: ColorValue;
+  /**
+   * The color of the tab indicator.
+   *
+   * @platform android
+   * @platform web
+   */
+  indicatorColor?: ColorValue;
 }
